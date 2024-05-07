@@ -58,9 +58,16 @@ const register = async () => {
     let result = await registerService(registerData.value);
     ElMessage.success(result.message?result.message:'注册成功!')
 }
+
+//导入token状态
+import { useTokenStore } from '@/stores/token.js'
+//调用useTokenStore得到状态
+const tokenStore = useTokenStore();
 //用于登录的事件函数
 const login = async () => {
     let result = await loginService(loginData.value)
+    //保存token
+    tokenStore.setToken(result.data)
     ElMessage.success(result.message?result.message:'登录成功!')
     await router.push('/');
 }
